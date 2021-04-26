@@ -1,13 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IdentityServer.AuthServer
 {
@@ -23,6 +18,12 @@ namespace IdentityServer.AuthServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentityServer()
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryApiScopes(Config.GetApiScopes())
+                .AddInMemoryClients(Config.GetClients())
+                .AddDeveloperSigningCredential();
+            
             services.AddControllersWithViews();
         }
 
@@ -44,6 +45,7 @@ namespace IdentityServer.AuthServer
 
             app.UseRouting();
 
+            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
