@@ -9,8 +9,8 @@ namespace IdentityServer.AuthServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("resource_api1") {Scopes = { "api1_read", "api1_write", "api1_update"}},
-                new ApiResource("resource_api2") {Scopes = { "api2_read", "api2_write", "api2_update"}}
+                new ApiResource("resource_api1") {Scopes = { "api1_read", "api1_write", "api1_update"}, ApiSecrets = new[] {new Secret("secretApi1".Sha256())}},
+                new ApiResource("resource_api2") {Scopes = { "api2_read", "api2_write", "api2_update"}, ApiSecrets = new[] {new Secret("secretApi2".Sha256())}}
             };
         }
 
