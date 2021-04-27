@@ -1,3 +1,5 @@
+using System.Linq;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +24,7 @@ namespace IdentityServer.AuthServer
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryApiScopes(Config.GetApiScopes())
                 .AddInMemoryClients(Config.GetClients())
+                .AddTestUsers(Config.GetUsers().ToList())
                 .AddDeveloperSigningCredential();
             
             services.AddControllersWithViews();
